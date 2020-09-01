@@ -6,16 +6,16 @@
 %                 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{System Design}
+\chapter{FireflyX: Features and Design}
 
 \section{System Overview}
-FireflyX is a mobile application tool that aims to aid children in learning music fundamentals. There will only be one role, which is the user. The target users are children of ages 5 to 8 with little knowledge of music. The user may edit the firefly models' parts based on their preferences.
+FireflyX is a mobile application tool that aims to aid children in learning music fundamentals. There will only be one role, which is the user. The target users are children of ages 5 to 8 with varying knowledge in music. The user may edit the firefly models' parts based on their preferences.
 
 The properties of the rhythm that can be configured on the firefly model are the tempo, length of the note, repetitions, rest pattern, and pitch. Each part of the firefly model directly corresponds to one property that can be modified.
 
-The parts of the firefly model may be configured either by part or by manipulating the parts by gestures, such as pinching, swiping, and tapping. After a firefly model is configured, the user may set it free on a canvas where they can freely fly and roam. The rhythm will then be played with the properties set by the different parts the user has chosen or have tweaked. 
+The parts of the firefly model may be configured either by part or by manipulating the parts by gestures, such as dragging, swiping, and tapping. After a firefly model is configured, the user may set it free on a canvas where they can freely fly and roam. The rhythm will then be played with the properties set by the different parts the user has chosen or have tweaked. 
 
-In order to create a rhythm, the user is allowed to make more firefly models with different configuration. The user will be allowed to play, pause, reset, stop, and save their current workspace.
+In order to create a rhythm, the user is allowed to make more firefly models with different configuration. The user will be allowed to play jar, load jars, preview, clear, edit previous firefly, and save their current jars.
 
 \section{System Objectives}
 The system aims to accomplish the following:
@@ -23,19 +23,16 @@ The system aims to accomplish the following:
     \item To enable users to make a rhythm and pitch using firefly models.
     \item To allow users to change the properties of the rhythm and pitch by tweaking the parts of the firefly model.
     \item To allow users to start playback by releasing the firefly models.
-    \item To allow users to access previous tracks using a playback history.
-    \item To allow users to save and load their current workspace.
+    \item To allow users to save and load their current jars.
 \end{itemize}
 \section{System Scope and Limitations}
 The users can make rhythms by modifying the firefly models. We will only include rhythms and pitch, specifically claps and rests, no harmonies. The properties of the music can be modified by tweaking the parts of the firefly model.
 
-The tempo of the firefly model can be chosen by the changing the body model. The body will be including only the 7 tempos used namely \textit{grave, allegro, larghetto, moderato, andante, adagio,} and \textit{largo}. The wing speed can be set by buttons to change the length of the note. The slower wing will represent slower notes and the faster wing will represent faster notes. For setting the repetition of the pattern, the wing size can be selected. The bigger sized wings will represent more repetitions, and the smaller sized wings will represent less repetitions. The speed and sizes will only be integers. The light of the firefly model is the pattern for the rests of the note. The number of patterns can be seen in Table \ref{Patterns}. Also the pitch will be represented by the biscuits scattered in the environment. 
+The tempo of the firefly model can be chosen by the changing the body model. The body will be including only the 3 tempos used namely \textit{grave, adagio} and \textit{moderato}. The wing speed can be set by buttons to change the length of the note. The slower wing will represent slower notes and the faster wing will represent faster notes. For setting the repetition of the pattern, the wing size can be selected. The bigger sized wings will represent more repetitions, and the smaller sized wings will represent less repetitions. The speed and sizes will only be integers. The light of the firefly model is the pattern for the rests of the note. The number of patterns can be seen in Table \ref{Patterns}. Also the pitch will be represented by the candies scattered in the environment. 
 
-Each workspace will be considered as an album. The user is given five fireflies in jar to play with. After the user modifies the firefly models, they can be released outside the jar. Only five fireflies may roam outside freely, where the firefly will traverse through a trail which leads to it moving to another note's pitch. After the fireflies that are currently playing are finished, they will be automatically be saved as a track. The track will be added to the album track list. The track will be represented also as a jar.
+Each workspace will be considered as a jar. The user is given five fireflies in jar to play with. After the user modifies the firefly models, they can be released outside the jar. Only five fireflies may roam outside freely, where the firefly will traverse through a trail which leads to it moving to another note's pitch. After the fireflies that are currently playing are finished, they will be automatically be saved as a track. The track will be added to the track list. The track will be represented also as a jar.
 
-The users will be able to listen to previous tracks by using a playback history. The playback history is a list of jars that can be found under the playback controls.  
-
-The users are allowed to save their current workspace. The saved file will include the current album, track list, and the configurations of the fireflies. An XML file format will be used for the saved files. These saved data can be loaded by the user at any time. Each save will ask the input for the title and author.
+The users will be able to listen to previous tracks by loading them in the environment. The users are allowed to save their current workspace. The saved file will include the current album and the configurations of the fireflies. A JSON file format will be used for the saved files. These saved data can be loaded by the user at any time. Each save will ask the input for the title of the jar.
 
 \section{Architectural Design}
 
@@ -53,7 +50,7 @@ The users are allowed to save their current workspace. The saved file will inclu
     \label{fig:fireflyxUML}
 \end{figure}
 
-Figure \ref{fig:sysarchi} and Figure \ref{fig:fireflyxUML} shows the architecture of the system. The system follows a Model-View-Controller architecture. All processes will be handled locally by the device. Figure \ref{fig:fireflyxUML} shows the detailed class diagrams for the system.
+Figure \ref{fig:sysarchi} and Figure \ref{fig:fireflyxUML} shows the architecture of the system. The system follows a Model-View-Controller architecture. Most of the process will be handled locally by the device, but due to the pandemic we added a feature that saves their work on an online Database. Figure \ref{fig:fireflyxUML} shows the detailed class diagrams for the system.
     
 \section{System Features}
 The following are the features of the FireflyX application. Features such as firefly model parts popup settings, playback toolbox, jar sandbox environment, and the canvas.
@@ -62,25 +59,22 @@ The following are the features of the FireflyX application. Features such as fir
 % The toolbox serves to give the user the parts needed to make the firefly. The toolbox includes the head, body, wings, and the tails. Assembling different fireflies have different musical properties. These properties can be fine tuned using this toolbox. The chosen parts will correspond to a string of rhythm pattern language that will be parsed by our playback module when the firefly is released to the sandbox environment.
 
 \subsubsection{Body Popup Settings}
-The body section of the firefly model can be tapped to show the popup settings. In the popup settings of the body section, the user is able to choose the tempo of the taps that the firefly will play. Each unique color of the body has an equivalent tempo. The user can also scroll through a variety of body models. The preferences of the body will be appended to the string of rhythm pattern language. For every environment once a body has been set for the first firefly the succeeding fireflies will have the same color with the first and by changing one the others get changed as well.
+The body section of the firefly model can be tapped to show the popup settings. In the popup settings of the body section, the user is able to choose the tempo of the firefly. Each unique color of the body has an equivalent tempo. The user can also scroll through a variety of body colors. The preferences of the body will be appended to the string of rhythm pattern language. For every environment once a body has been set for the first firefly the succeeding fireflies will have the same color with the first and by changing one the others get changed as well.
 
 \subsubsection{Wings Popup Settings}
-The wing section of the firefly model can be tapped to show the popup settings. In the popup settings of the wings section, the user is able to choose the speed of the note being played by pressing 1, 2, 4, or 8 which represents the whole note, half note, quarter note, eighth note, respectively. The size of the wing will represent the number of repetitions. The minimum size is 1 and the maximum size is 6. The wing preferences will be appended to the string of rhythm pattern language.
+The wing section of the firefly model can be tapped to show the popup settings. In the popup settings of the wings section, the user is able to choose the speed of the note being played by pressing 1, 2, 4, and 8 which represents the whole note, half note, quarter note, eighth note, respectively or a picture of their notes itself. The size of the wing will represent the number of repetitions. The minimum size is 1 and the maximum size is 6. The wing preferences will be appended to the string of rhythm pattern language.
 
 \subsubsection{Tail Light Popup Settings}
-The tail section of the firefly model can be tapped to show the popup settings. On the right side, the user is able to change the rest pattern of the note being played. The tail lights will be blinking patterns and pattern can be previewed in popup settings, the light will be based from the chosen color in the body. The patterns will be predetermined by our library of patterns. The left side will be a button for setting the pitch. The chosen pattern will be appended to the string of rhythm and pitch pattern language.
+The tail section of the firefly model can be tapped to show the popup settings. On the right side, the user is able to change the rest pattern of the note being played. The tail lights will be representing the patterns and pattern can be previewed in a tail popup settings below, the light will be based from the chosen color in the body. The patterns will be predetermined by our library of patterns. The chosen pattern will be appended to the string of rhythm and pitch pattern language.
 
 \subsubsection{Set Pitch Mode}
-The mode is only accessible upon tapping the feed me button. The feed me button can be accessed during the tail pop settings. There will be a staff where the biscuits may be placed. The biscuits will be representing the notes. The number of biscuits will depend on the number of claps in the chosen pattern. The placement of the notes will also be determining the flight pattern of the firefly model. The preview button will also act like a playback for one specific firefly. The clear button will allow the user to reset the biscuits. The chosen pitch pattern will be appended to a separated pattern language.
+The mode is only accessible upon tapping the feed me button. The feed me button can be accessed during the tail pop settings. There will be a staff where the candies may be placed. The candies will be representing the notes. The number of candies will depend on the number of claps in the chosen pattern. The placement of the notes will also be determining the flight pattern of the firefly model. The preview button will also act like a playback for one specific firefly. The clear button will allow the user to reset the candies. The chosen pitch pattern will be appended to a separated pattern language.
 
 \subsection{Jar Sandbox Environment}
 The sandbox environment will be represented by a jar. In the jar, five firefly models can be seen where each can be tapped. When a firefly model is tapped, it enlarges and enables the popup settings when a specific part is tapped. The cork can also be tapped to release all of the firefly models into the canvas.
 
 \subsection{Canvas}
-Once the jar lid is tapped, the finished firefly models are released into the canvas where they roam around and play music based on their settings by sequence. Once the firefly models on the canvas are done playing they will be automatically be added to the album track list.
-
-\subsection{Playback Control}
-This toolbox will allow the user to control the playback of the firefly models. The user may pause, play, stop, and mute the music playback at anytime by clicking the play, pause, stop, and mute icons in the toolbox. The user is also able to save the existing workspace, and load a saved workspace. This can be done by clicking the save, and load buttons respectively. The user is also able to view previous tracks. In order to see the previous tracks, there will be a track list at the playback toolbox. The volume of the playback can be controlled by the slider on top of the canvas. Sliding to the sun means higher volume, and sliding to the moon means lower volume.
+Once the jar lid is tapped, the finished firefly models are released into the canvas where they roam around and play music based on their settings by sequence. Once the firefly models on the canvas are done playing they will be automatically be added to the list of jars.
 
 
 \section{Music Language, Rules and Library of Patterns}
@@ -114,25 +108,37 @@ Er                  & Eighth Rest    & -8                  \\
 
 \begin{table}[H]
 \caption{Pitch Representation}
-\label{pitchRep}
+\label{pitchVal}
 \centering
 \begin{tabular}{|l|l|r|} 
 \hline
 Pitch of Note & Pitch Representation   \\ 
 \hline
-A                   & (a)                     \\ 
+c                   & (63)                     \\ 
 \hline
-B                   & (b)                      \\ 
+d                   & (65)                      \\ 
 \hline
-C                   & (c)                      \\ 
+e                   & (67)                      \\ 
 \hline
-D                   & (d)                    \\ 
+f                   & (68)                    \\ 
 \hline
-E                   & (e)                      \\ 
+g                   & (70)                      \\ 
 \hline
-F                   & (f)                       \\ 
+a                   & (72)                       \\ 
 \hline
-G                   & (g)                    \\ 
+b                   & (74)                    \\ 
+\hline
+c1                   & (75)                    \\ 
+\hline
+d1                   & (77)                    \\ 
+\hline
+e1                   & (79)                    \\ 
+\hline
+f1                   & (80)                    \\ 
+\hline
+g1                   & (82)                    \\ 
+\hline
+a1                   & (84)                    \\ 
 \hline
 Rest                   & (-)                    \\ 
 \hline
@@ -149,17 +155,9 @@ Name of Tempo & Beats Per Minute   \\
 \hline
 Grave                  & 25 bpm                     \\ 
 \hline
-Largo                  & 40 bpm                      \\ 
+Adagio                  & 60 bpm                      \\
 \hline
-Larghetto                  & 60 bpm                      \\ 
-\hline
-Adagio                  & 66 bpm                    \\ 
-\hline
-Andante                   & 76 bpm                      \\ 
-\hline
-Moderato                   & 108 bpm                       \\ 
-\hline
-Allegro                  & 120 bpm                    \\ 
+Moderato                   & 100 bpm                       \\ 
 \hline
 \end{tabular}
 \end{table}
@@ -168,7 +166,7 @@ To help us better understand the music sheets from the Book 1 of the Suzuki teac
 
 The following patterns are taken from the Book 1 of the Suzuki teaching method, included here are the 3 most common clap and rest patterns found in each clap and rest combination (see Table \ref{Patterns}). For the representation in the table, 1 is for the clap and the 0 is for the rest. An example as seen from the table is "1Rest" - the number 1 coefficient represents the number of instances of the rest. A change in pattern from rest to tap is separated by a dash. 
 
-For iteration two and three since pitch will already be added we would use the same set of patterns and add a corresponding pitch to a note denoted inside a parenthesis from the seven pitches found in Table \ref{pitchRep} and also how to represent ones from a rest. An example pattern is shown through two sample pieces of music (found in Appendix \ref{sec:appendixe}), the sample representation is seen in Table \ref{PitchPatterns}.
+For iteration two and three, since pitch will already be added we would use the same set of patterns and add a corresponding pitch (from C major scale) to a value in Swift audioKit denoted inside a parenthesis from the pitches found in Table \ref{pitchVal} and also how to represent ones from a rest. An example pattern is shown through part of two sample pieces of music (found in Appendix \ref{sec:appendixe}), the sample representation is seen in Table \ref{PitchPatterns}.
 
 \begin{landscape}
 \begin{table}
@@ -199,7 +197,7 @@ For iteration two and three since pitch will already be added we would use the s
 
 \begin{table}
 \centering
-\caption{Patterns Found in Hot Cross Buns and Old Macdonald}
+\caption{Some Patterns Found in Hot Cross Buns and Old Macdonald}
 \label{PitchPatterns}
 \begin{tabular}{|l|l|l|l|} 
 \hline
@@ -207,7 +205,7 @@ For iteration two and three since pitch will already be added we would use the s
 \hline
 0                                                                                                      & 1Rest                                                                                                          & 1                                                                                                & {[}Wr(-) - 1]                                                                                                                                    \\ 
 \hline
-10                                                                                                     & 1Clap-1Rest                                                                                                    & 1                                                                                                & {[}H(g)Hr(-) - 1]                                                                                                                                \\ 
+10                                                                                                     & 1Clap-1Rest                                                                                                    & 1                                                                                                & {[}H()Hr(-) - 1]                                                                                                                                \\ 
 \hline
 111                                                                                                    & 3Clap                                                                                                          & 3                                                                                                & {[}Q(b)Q(a)H(g) - 3]                                                                                                                             \\ 
 \hline
@@ -219,7 +217,7 @@ For iteration two and three since pitch will already be added we would use the s
 \end{table}
 
 \section{Data Design}
-Each selection of the firefly body part corresponds to an integer that references into a music library to get the necessary music files needed for the playback. The chosen format for the save files will be using XML. The file will be saving all the configurations of the current fireflies on the canvas. The file can be loaded and it will load the fireflies with their configurations that were saved on the file. The saved files will be stored locally on the device. Allowed inputs for the files can be seen in the table below in Table 5.6. An example xml file is also shown in Table \ref{XML} that shows how the sample piece Hot Cross Buns seen in Appendix \ref{sec:appendixe} will be saved.
+Each selection of the firefly body part corresponds to an integer that references into a music library to get the necessary music files needed for the playback. The chosen format for the save files will be using JSON. The file will be saving all the configurations of the current fireflies on the canvas. The file can be loaded and it will load the fireflies with their configurations that were saved on the file. The saved files will be stored locally on the device. Allowed inputs for the files can be seen in the table below in Table 5.6. An example JSON file is also shown in Table \ref{XML} that shows how the sample piece Hot Cross Buns seen in Appendix \ref{sec:appendixe} will be saved.
 
 % \begin{figure}[H]
 %     \centering
@@ -228,18 +226,29 @@ Each selection of the firefly body part corresponds to an integer that reference
 %     \label{sampleXML}
 % \end{figure}
 
-\begin{landscape}
+% \begin{landscape}
+% \begin{table}
+% \centering
+% \caption{Data Design Specifics}
+% \label{XML}
+% \begin{tabular}{|l|} 
+% \hline
+% \begin{tabular}[c]{@{}l@{}}\textless{}album albumName = "Sample with Pitch" albumAuthor = "Ted"\textgreater{}	albAlbum1						\\~ ~ ~ ~ \textless{}track trackName = "Hot Cross Buns" \textgreater{}	trkTrack1					\\~ ~ ~ ~ ~ ~ ~ ~ \textless{}firefly fireflyName = "ffObj1"\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}body color = "green" bpm = 60\textgreater{}	ffObj1Body			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}tail pattern = 111 count = 3 pitch = Q(b)Q(a)H(g)\textgreater{}	ffObj1Tail		\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/tail\textgreater{}			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/body\textgreater{}				\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}wings size = 2 speed = 4\textgreater{}	ffObj1Wings			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/wings\textgreater{}\\~ ~ ~ ~ ~ ~ ~ ~ \textless{}/firefly\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ \textless{}firefly fireflyName = "ffObj2"\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}body color = "green" bpm = 60\textgreater{}	ffObj2Body			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}tail pattern = 11111111 count = 8 pitch = E(b)E(b)E(b)E(b)E(a)E(a)E(a)E(a)\textgreater{}	ffObj2Tail		\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/tail\textgreater{}			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/body\textgreater{}				\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}wings size = 1 speed = 8\textgreater{}	ffObj2Wings			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/wings\textgreater{}\\~ ~ ~ ~ ~ ~ ~ ~ ~\textless{}/firefly\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ ~\textless{}firefly fireflyName = "ffObj3"\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}body color = "green" bpm = 60\textgreater{}	ffObj3Body			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}tail pattern = 111 count = 3 pitch = Q(b)Q(a)H(g)\textgreater{}	ffObj3Tail		\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/tail\textgreater{}			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/body\textgreater{}				\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}wings size = 1 speed = 4\textgreater{}	ffObj3Wings~ \\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/wings\textgreater{}\\~ ~ ~ ~ ~ ~ ~ ~ \textless{}/firefly\textgreater{}	\\~ ~ ~ ~ \textless{}/trackName\textgreater{}						\\\textless{}/album\textgreater{}	\end{tabular}  \\
+% \hline
+% \end{tabular}
+% \end{table}
+% \end{landscape}
+
 \begin{table}
 \centering
-\caption{Data Design Specifics}
+\caption{JSON Data Design}
 \label{XML}
 \begin{tabular}{|l|} 
 \hline
-\begin{tabular}[c]{@{}l@{}}\textless{}album albumName = "Sample with Pitch" albumAuthor = "Ted"\textgreater{}	albAlbum1						\\~ ~ ~ ~ \textless{}track trackName = "Hot Cross Buns" \textgreater{}	trkTrack1					\\~ ~ ~ ~ ~ ~ ~ ~ \textless{}firefly fireflyName = "ffObj1"\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}body color = "green" bpm = 60\textgreater{}	ffObj1Body			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}tail pattern = 111 count = 3 pitch = Q(b)Q(a)H(g)\textgreater{}	ffObj1Tail		\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/tail\textgreater{}			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/body\textgreater{}				\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}wings size = 2 speed = 4\textgreater{}	ffObj1Wings			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/wings\textgreater{}\\~ ~ ~ ~ ~ ~ ~ ~ \textless{}/firefly\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ \textless{}firefly fireflyName = "ffObj2"\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}body color = "green" bpm = 60\textgreater{}	ffObj2Body			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}tail pattern = 11111111 count = 8 pitch = E(b)E(b)E(b)E(b)E(a)E(a)E(a)E(a)\textgreater{}	ffObj2Tail		\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/tail\textgreater{}			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/body\textgreater{}				\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}wings size = 1 speed = 8\textgreater{}	ffObj2Wings			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/wings\textgreater{}\\~ ~ ~ ~ ~ ~ ~ ~ ~\textless{}/firefly\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ ~\textless{}firefly fireflyName = "ffObj3"\textgreater{}					\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}body color = "green" bpm = 60\textgreater{}	ffObj3Body			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}tail pattern = 111 count = 3 pitch = Q(b)Q(a)H(g)\textgreater{}	ffObj3Tail		\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/tail\textgreater{}			\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/body\textgreater{}				\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}wings size = 1 speed = 4\textgreater{}	ffObj3Wings~ \\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \textless{}/wings\textgreater{}\\~ ~ ~ ~ ~ ~ ~ ~ \textless{}/firefly\textgreater{}	\\~ ~ ~ ~ \textless{}/trackName\textgreater{}						\\\textless{}/album\textgreater{}	\end{tabular}  \\
+\begin{tabular}[c]{@{}l@{}}jarObject~: \{\\~ ~ ~ ~ {}"JarName" : "Hot Cross Buns",\\\ ~ ~ ~ ~{}"Tempo" : 60,\\\ ~ ~ ~ ~"Fireflies" : \{\\~ ~ ~ ~ ~ ~ ~ ~"Firefly1" : \{\\ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"Beat Pattern" : "Q Q H",\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"Pitch Pattern" : "b a g",\\ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"Repetitions" : 2\\~ ~ ~ ~ ~ ~ ~ ~\},\\~ ~ ~ ~ ~ ~ ~ ~"Firefly2" : \{\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"Beat Pattern" : "E E E E E E E E",\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"Pitch Pattern" : "b b b b a a a a",\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"Repetitions" : 1\\~ ~ ~ ~ ~ ~ ~ ~\},\\~ ~ ~ ~ ~ ~ ~ ~"Firefly3" : \{\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"Beat Pattern" : "Q Q H",\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"Pitch Pattern" : "b a g",\\~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"Repetitions" : 1\\~ ~ ~ ~ ~ ~ ~ ~\}\\~ ~ ~ ~\}\\\}\end{tabular}  \\
 \hline
 \end{tabular}
 \end{table}
-\end{landscape}
 
 % \begin{landscape}
 % \begin{table}[]
@@ -267,27 +276,23 @@ Each selection of the firefly body part corresponds to an integer that reference
 \begin{landscape}
 \begin{table}
 \centering
-\caption{Data Design Specifics}
+\caption{JSON Data Design Specifics}
 \label{XML}
-\begin{tabular}{|p{2cm}|p{2.8cm}|p{6.6cm}|p{9cm}|} 
+\begin{tabular}{|p{2.8cm}|p{6.6cm}|p{9cm}|} 
 \hline
- \textbf{Tag}                    & \textbf{Attribute}                                                                      & \textbf{Possible Values}                                                                                                        & \textbf{Description}                                                                                                                                                                                                                                                                                                                                                                                                      \\ 
+\textbf{Variables} & \textbf{Possible Values}  & \textbf{Description}                                                                                                                                                                                                                    \\ 
 \hline
-\textless{}album \textgreater{}  & \begin{tabular}[c]{@{}l@{}}albumName\\{}authorName \end{tabular} & \begin{tabular}[c]{@{}l@{}}varchar=Album1\\{}string=Ted \end{tabular}                    & The album will contain the author and album name it will also include tracks.                                                                                                                                                                                                                                                                                                                                             \\ 
+JarName~~          & string~                   & This contains the album name that is specified by the user.                                                                                                                                                                             \\ 
 \hline
-\textless{}track\textgreater{}   & trackName                                                                               & varchar=Track 1                                                                                                 & There will be a maximum of 5 fireflies per track.                                                                                                                                                                                                                                                                                                                                                                         \\ 
+Tempo              & integer~                  & It represents the tempo of the firefly, the colors are limited to the three colors imitating stoplights which are red,yellow, and green.                                                                                                \\ 
 \hline
-\textless{}firefly\textgreater{} & fireflyName                                                                             & varchar=ffObj1                                                                                                     & The firefly represents the rhythm and pitch that the user has defined by assembling their firefly                                                                                                                                                                                                                                                      \\ 
+Fireflies          & array~                    & This contains the array of fireflies that are configured by the user which has a maximum of 5 fireflies per jar. Inside the array are the configured beat pattern, pitch pattern, and number of repetitions that was made by the user.  \\ 
 \hline
-\textless{}body\textgreater{}    & \begin{tabular}[c]{@{}l@{}}color\\{}bpm \end{tabular}            & \begin{tabular}[c]{@{}l@{}}color=Red\\{}integer=25 \end{tabular}                                          & The body represents the tempo of the firefly. The colors are limited to the seven colors of the rainbow to represent the 7 pitches.                                                                                                                                                                                     \\ 
+Beat Pattern       & string                    & This contains the beat-rest pattern. For example a beat of QQQQ which is a 4Clap pattern with a count of 4.                                                                                                                             \\ 
 \hline
-\textless{}wings\textgreater{}   & \begin{tabular}[c]{@{}l@{}}size\\{}speed \end{tabular}           & \begin{tabular}[c]{@{}l@{}}integer=5\\{}integer=8 \end{tabular}                                            & The wings represent the speed and repetitions of the rhythm. The values of size are limited from 1-6 and the speed are values representing the speed of the notes from slowest to fastest 1,2,4,8.                                                                                           \\ 
+Pitch Pattern      & string                    & This contains the pitch pattern which is retrieved from the making of the candies that represent the different pitches.                                                                                                                 \\ 
 \hline
-\textless{}tail\textgreater{}    &   
-\begin{tabular}[c]{@{}l@{}}pattern\\{}count\\{}pitch \end{tabular}     
-
-
-& \begin{tabular}[c]{@{}l@{}}integer=1010 \\{}integer=4\\{}string=Q(f)Qr(-)Q(a)Qr(-) \end{tabular} & Represents the clap rest pattern and color based on the tempo of the body. Example is 1010 which means 1Clap-1Rest-1Clap-1Rest with a count of 4. The pitch pattern on the~other hand is also retrieved for the making of the biscuits that represent the different pitches.  \\
+Repetition         & integer                   & This represents the configured right wing which is the number of times or repetitions the firefly will play once released to the environment.                                                                                           \\
 \hline
 \end{tabular}
 \end{table}
@@ -301,206 +306,136 @@ Each selection of the firefly body part corresponds to an integer that reference
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/Splash.png}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newSplash.png}
     \caption{Splash Screen}
     \label{fig:splash}
 \end{figure}
 
 The Splash Screen is the first screen shown to the child when the application is opened. The splash screen will last for 3 seconds.
 
-\subsection{Main Menu}
+\subsection{Home Screen}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/MainMenu.png}
-    \caption{Main Menu}
-    \label{fig:mainmenu}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newMain.png}
+    \caption{Home Screen}
+    \label{fig:newhome}
 \end{figure}
 
-The Main Menu (figure \ref{fig:mainmenu}) is the next screen that will show after the splash screen, here the child may tap between 3 buttons, namely: start, tutorial, and load. The start button will open a blank workspace. The tutorial button will show the user how to assemble the firefly step by step and the different gestures that will be utilized. The load button will open the Load Menu where the user may load saved workspaces.
+The Home Screen (figure \ref{fig:newhome}) is the next screen that will show after the splash screen, here the child may tap between 5 buttons, namely: Task \#1, Task \#2, Task \#3 ,Task \#4 ,and Task \#5. This is where the child will be doing the tasks for testing.
 
-\subsection{Start New}
+\subsection{First Firefly Screen}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/BlankSpace.png}
-    \caption{Blank Workspace}
-    \label{fig:blankworkspace}
+    \includegraphics[width=5cm]{figures/newScreenFlows/newfirstfirefly.png}
+    \caption{First Firefly}
+    \label{fig:firstfly}
 \end{figure}
 
-After tapping Start button this is the blank workspace that the child will see figure \ref{fig:blankworkspace}. In this screen, the user will see a jar of fireflies, and other playback controls. This screen is important as this follows the principle of an Obvious Starting point as it becomes a starting point in the application that the child can first explore different interactions and also a safe space for the child as they know that if they commit something wrong they can always go back to this screen.
+After going in to a task, the child will be greeted by a forest environment and a single firefly.
+This will be the first firefly that the child can play around with and tweak to their heart's content.
 
-\subsection{Edit Firefly}
+\subsection{Firefly Body Selection}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/ChooseFirefly.png}
-    \caption{Editing a Firefly}
-    \label{fig:editfirefly}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newbody.png}
+    \caption{Body Popup}
+    \label{fig:newbody}
 \end{figure}
 
-After Loading a blank workspace, the child may choose a firefly model to edit by tapping any of the small fireflies in the jar. After tapping a firefly model in the jar, the firefly model will be enlarged so that the child may tap a firefly part to edit. We decided to use simple tap gestures for tasks involved in manipulating the firefly parts to make it easier for the child to remember them and to reduce the load of the actions that can be caused by using other gestures.  
+When the child taps the body part, they can choose from three different colors that represent different tempos.
 
-\subsection{Edit Firefly Body}
+\subsection{Firefly Right Wing Selection}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/Body.png}
-    \caption{Editing Firefly Body}
-    \label{fig:tweakBody}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newrightwing.png}
+    \caption{Right Wing Popup}
+    \label{fig:newrightwing}
 \end{figure}
 
-After choosing a firefly model to edit, the child may tap the body to show the popup settings that can configure the properties. The different body color corresponds to different tempos.
+When the child taps the right wing, they will be able to choose how many times the firefly will play the pattern.
 
-\subsection{Edit Firefly Wing}
+\subsection{Firefly Left Wing Selection}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/Wing.png}
-    \caption{Editing Firefly Wing}
-    \label{fig:tweakWing}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newleftwing2.png}
+    \caption{Left Wing Popup Notes}
+    \label{fig:newleftwing}
 \end{figure}
 
-After choosing a firefly model to edit, the child may tap the wing to show the popup settings that can configure the properties. For the wing popup settings, there will be two bubbles. The first bubble is for configuring the wing speed. The different wing speed corresponds to length of notes. The other wing configures the wing size. The different wing size corresponds to different number of repetitions. 
-
-\subsection{Edit Firefly Tail Light}
+When the child taps the left wing, they will be able to choose the first note to play.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/Tail.png}
-    \caption{Editing Firefly Tail Light}
-    \label{fig:tweakTail}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newleftwing.png}
+    \caption{Left Wing Popup Rests}
+    \label{fig:newleftwing2}
 \end{figure}
 
-After choosing a firefly model to edit, the child may tap the tail light to show the popup settings that can configure the properties.
+The lever can be toggled to show the rests.
 
-\subsection{Feed Firefly}
+\subsection{Firefly Tail Selection}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/FeedFirefly.png}
-    \caption{Set Pitch of Notes by Feeding the Firefly}
-    \label{fig:feedfirefly}
+    \includegraphics[width=10cm]{figures/newScreenFlows/candypreview.png}
+    \caption{Tail Popup}
+    \label{fig:newtail}
 \end{figure}
 
-After choosing the preferred tail light, the user may tap the feed me button in order to set the biscuits for the path of the firefly model which will also determine the pitch of the notes that the firefly model will play.
+When the child taps the tail, they will be able to choose the patterns based on their first note. The child will be able to see the preview of the candy patterns.
+
+\subsection{Feed Me}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/PreviewEatingTrail.png}
-    \caption{Preview Flight Pattern}
-    \label{fig:previewFLight}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newfeedme.png}
+    \caption{Left Wing Popup Notes}
+    \label{fig:newleftwing}
 \end{figure}
 
-The user may also see a preview of how the firefly model will fly based on their placed biscuits by tapping the preview button.
+After choosing the pattern, the child can tap the feed me button which brings up the staff where he can place the candies to give the firefly pitches. In this screen, there is also a preview button which plays the current firefly to see how it will sound like. The clear button resets the candy placements. The last screen button allows you to go back to editing the firefly. The save buttons saves the current firefly configuration. The next firefly button will go to the next editable firefly.
 
-\subsection{Change Currently editing firefly}
+\subsection{Jar Play}
+
+
+
+\subsection{Menu Settings}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/ChangeFirefly.png}
-    \caption{Choosing Different Firefly to Edit}
-    \label{fig:firefly2}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newmainsettings.png}
+    \caption{Settings}
+    \label{fig:newsettings}
 \end{figure}
 
-In order to change the currently editing firefly model to a different firefly model. The child can simply click any of the smaller fireflies to enlarge and the previously enlarged firefly model will minimize. We wanted this action to show a contrast of sizes so that the child focus will shift from the one currently made to the new one.
+When the child taps on the gear icon, this will bring up a popup menu where can tap three different buttons. The new jar button will create a new jar of fireflies. The load button will allow him to load previously saved jars. The settings button will allow him to change some preferences.
 
-\subsection{Release Fireflies to start playback}
+\subsection{Visual Settings}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figures/Release.png}
-    \caption{Releasing the Fireflies}
-    \label{fig:releaseFirefly}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newsettings.png}
+    \caption{Visual Settings}
+    \label{fig:newvisettings}
 \end{figure}
 
-After editing the firefly models to desired configurations, the child can tap on the lid of the jar to release all the fireflies and start the rhythm playback. This particular action was chosen as the start of the playback since we wanted it to represent the real world where fireflies are released and the child can see it as a way of familiarity.
+After tapping the settings button, the child may toggle the speech bubble guide and toggle to use numbers or notes for the left wing.
 
-\subsection{Pause, Play, and Stop playback}
+\subsection{Load Screen}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6cm]{figures/StopPlayPause.png}
-    \caption{Play Pause, and Stop Controls}
-    \label{fig:firefly2}
+    \includegraphics[width=10cm]{figures/newScreenFlows/newload.png}
+    \caption{Load Screen}
+    \label{fig:newload}
 \end{figure}
+After tapping the load button, this brings up the previous jars that the child made and can load from his previous saves.
 
-During playback, the child can pause and play the playback by toggling the play button. The stop button stops the current playback and starts the playback from the start on pause. The design of the buttons was made to be familiar buttons as they can already give the child an idea of what the buttons do.
- 
-\subsection{Adjusting Volume}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=6cm]{figures/volumecontrol.png}
-    \caption{Changing Volume of Playback}
-    \label{fig:volcontrol}
-\end{figure}
-
-During playback, the child can adjust the volume of the playback by using the slider between the sun and moon. The moon will represent a lower volume and the sun will represent a higher volume. One finger drag gesture will be used as the child has more control of the desired volume they need with the use of this gesture.
-
-\subsection{Replay Previous Tracks}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=6cm]{figures/historyplayback.png}
-    \caption{List of Previous Tracks}
-    \label{fig:firefly2}
-\end{figure}
-
-After the firefly models are done with their playback, they are placed on to the playback history. The user may play these previous tracks again by dragging them to the jar on the left side then press play. This also was designed to represent the real world action of catching and releasing a firefly.
-
-\subsection{Reset Album}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=6cm]{figures/resetwork.png}
-    \caption{Reset Album Button}
-    \label{fig:firefly2}
-\end{figure}
-
-If the child wishes to start fresh with a new blank album, the child may press the reset button to return everything to default. We needed to put this as the child can go back to the start which is a screen where he is already familiar with and he would know there is a way to undo their mistakes.
-
-\subsection{Save Album}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=6cm]{figures/Save.png}
-    \caption{Save Album Button}
-    \label{fig:firefly2}
-\end{figure}
-The child may choose to save the existing album at anytime. Upon tapping the save button, the child is asked to input an author name and a title for the album. After confirming the album is then saved to the local device and can be loaded at anytime.
-\subsection{Load Album}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=6cm]{figures/load.png}
-    \caption{Load Album Button}
-    \label{fig:firefly2}
-\end{figure}
-
-The child may choose to load an existing album at anytime by tapping the load button.
-
-\subsection{Load Menu}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=6cm]{figures/LoadMenu.png}
-    \caption{Load Menu}
-    \label{fig:loadmenu}
-\end{figure}
-
-The Load Menu shows all saved albums/workspaces. The child may tap on an album then press the load button to continue working on that album.
-
-\subsection{Exit to Main Menu}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=6cm]{figures/exitmenu.png}
-    \caption{Exit Button}
-    \label{fig:exitbutton}
-\end{figure}
-
-The child may choose to tap the exit to main button at any time. When the button is pressed, a confirmation appears and when the child confirms that they want to exit to main menu, the screen will be transferred to the main menu. Same as the start screen this will give the child a sense of relief knowing they can go back to the start and begin all over again.
 % \section{Use Case Diagram}
 % \begin{figure}[!htb]
 %     \centering
@@ -512,7 +447,7 @@ The child may choose to tap the exit to main button at any time. When the button
 % This is the use case diagram of Firefly. These are all the actions that the user is allowed to do within the application.
 
 \section{Deployment Plan}
-FireflyX will be developed using Xcode using the Swift language. The application once compiled can be uploaded to the Apple App Store where anyone may download the app for free but with in-game purchases. The files will be saved locally this includes the songs and the environment, these files will be exportable with the use of the XML. Using the XML another user in a different iPad can retrieve the same environment by loading the XML sent. A diagram showing the deployment plan is shown in figure \ref{deploymentPlan}.
+FireflyX will be developed using Xcode using the Swift language. The application once compiled can be uploaded to the Apple App Store where anyone may download the app for free but with in-game purchases. The files will be saved locally this includes the songs and the environment, these files will be exportable with the use of the JSON. Using the JSON another user in a different iPad can retrieve the same environment by loading the JSON sent. A diagram showing the deployment plan is shown in figure \ref{deploymentPlan}.
 
 \begin{figure}[H]
     \centering
@@ -520,3 +455,8 @@ FireflyX will be developed using Xcode using the Swift language. The application
     \caption{FireflyX Deployment Plan}
     \label{deploymentPlan}
 \end{figure}
+
+We will then use TestFlight to distribute our application. This is because Testflight allows for remote testing. To use TestFlight, we will upload beta builds of FireflyX, and invite testers using their email addresses. Testers will then check their email to accept the invitation to test the application. In order for the testers to install FireflyX, They will have to use the TestFlight app in their iPad after accepting the invitation in their email.
+
+
+FireflyX also uses Firebase to save the data online in JSON format. 
