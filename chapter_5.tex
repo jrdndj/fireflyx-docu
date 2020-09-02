@@ -45,8 +45,8 @@ The users will be able to listen to previous tracks by loading them in the envir
 
 \begin{figure} [H]
     \centering
-    \includegraphics[width=17cm]{figures/FireflyXUML.png}
-    \caption{UML Class Diagram of FireflyX}
+    \includegraphics[width=17cm]{figures/NewFigure/FireflyXUML.png}
+    \caption{UML class diagram of FireflyX}
     \label{fig:fireflyxUML}
 \end{figure}
 
@@ -80,12 +80,12 @@ Once the jar lid is tapped, the finished firefly models are released into the ca
 \section{Music Language, Rules and Library of Patterns}
 
 \begin{table}[H]
-\caption{Rhythm Representation}
+\caption{Rhythm representation}
 \label{musiclang}
 \centering
 \begin{tabular}{|l|l|r|} 
 \hline
-Note Representation & Music Notation & Integer Equivalent  \\ 
+note representation & music notation & integer equivalent  \\ 
 \hline
 W                   & Whole Note     & 1                   \\ 
 \hline
@@ -107,12 +107,12 @@ Er                  & Eighth Rest    & -8                  \\
 \end{table}
 
 \begin{table}[H]
-\caption{Pitch Representation}
+\caption{Pitch representation}
 \label{pitchVal}
 \centering
 \begin{tabular}{|l|l|r|} 
 \hline
-Pitch of Note & Pitch Representation   \\ 
+pitch of note & pitch representation   \\ 
 \hline
 c                   & (63)                     \\ 
 \hline
@@ -146,7 +146,7 @@ Rest                   & (-)                    \\
 \end{table}
 
 \begin{table}[H]
-\caption{Tempo Representation}
+\caption{Tempo representation}
 \label{pitchRep}
 \centering
 \begin{tabular}{|l|l|r|} 
@@ -162,7 +162,7 @@ Moderato                   & 100 bpm                       \\
 \end{tabular}
 \end{table}
 
-To help us better understand the music sheets from the Book 1 of the Suzuki teaching method, we decided to convert the sheets to a language we can easily understand and represent on code. See Table \ref{musiclang} for reference to the converted language. This will mainly be used for the representation for the first iteration since at this iteration it only covers rhythm. To make the app easier to use, a set of rules for the music composition has been used. The firefly will only be using a maximum of 6 measures per rhythm. Each measure is equal to 1 pattern. The speed of the notes and rests that will be supported by the application will only be the whole, half, quarter, and eighth note.
+To help us better understand the music sheets from the Book 1 of the Suzuki teaching method, we decided to convert the sheets to a language we can easily understand and represent on code. See Table \ref{musiclang} for reference to the converted language. This will mainly be used for the representation for the first iteration since at this iteration it only covers rhythm. To make the application easier to use, a set of rules for the music composition has been used. The firefly will only be using a maximum of 6 measures per rhythm. Each measure is equal to 1 pattern. The speed of the notes and rests that will be supported by the application will only be the whole, half, quarter, and eighth note.
 
 The following patterns are taken from the Book 1 of the Suzuki teaching method, included here are the 3 most common clap and rest patterns found in each clap and rest combination (see Table \ref{Patterns}). For the representation in the table, 1 is for the clap and the 0 is for the rest. An example as seen from the table is "1Rest" - the number 1 coefficient represents the number of instances of the rest. A change in pattern from rest to tap is separated by a dash. 
 
@@ -171,7 +171,7 @@ For iteration two and three, since pitch will already be added we would use the 
 \begin{landscape}
 \begin{table}
 \centering
-\caption{Common Patterns in Suzuki Book 1}
+\caption{Common patterns in Suzuki Book 1}
 \label{Patterns}
 \begin{tabular}{|l|l|l|l|} 
 \hline
@@ -197,7 +197,7 @@ For iteration two and three, since pitch will already be added we would use the 
 
 \begin{table}
 \centering
-\caption{Some Patterns Found in Hot Cross Buns and Old Macdonald}
+\caption{Some patterns found in Hot Cross Buns and Old Macdonald}
 \label{PitchPatterns}
 \begin{tabular}{|l|l|l|l|} 
 \hline
@@ -241,7 +241,7 @@ Each selection of the firefly body part corresponds to an integer that reference
 
 \begin{table}
 \centering
-\caption{JSON Data Design}
+\caption{JSON data design}
 \label{XML}
 \begin{tabular}{|l|} 
 \hline
@@ -276,7 +276,7 @@ Each selection of the firefly body part corresponds to an integer that reference
 \begin{landscape}
 \begin{table}
 \centering
-\caption{JSON Data Design Specifics}
+\caption{JSON data design specifics}
 \label{XML}
 \begin{tabular}{|p{2.8cm}|p{6.6cm}|p{9cm}|} 
 \hline
@@ -299,6 +299,7 @@ Repetition         & integer                   & This represents the configured 
 \end{landscape}
 
 \section{Screen Flows}
+\label{sec: it3results}
 
 % All use cases can be seen in Appendix \ref{sec:appendixb}.
 
@@ -307,7 +308,7 @@ Repetition         & integer                   & This represents the configured 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/newSplash.png}
-    \caption{Splash Screen}
+    \caption{Splash screen}
     \label{fig:splash}
 \end{figure}
 
@@ -318,7 +319,7 @@ The Splash Screen is the first screen shown to the child when the application is
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/newMain.png}
-    \caption{Home Screen}
+    \caption{Home screen}
     \label{fig:newhome}
 \end{figure}
 
@@ -329,7 +330,7 @@ The Home Screen (figure \ref{fig:newhome}) is the next screen that will show aft
 \begin{figure}[H]
     \centering
     \includegraphics[width=5cm]{figures/newScreenFlows/newfirstfirefly.png}
-    \caption{First Firefly}
+    \caption{First firefly}
     \label{fig:firstfly}
 \end{figure}
 
@@ -341,7 +342,7 @@ This will be the first firefly that the child can play around with and tweak to 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/newbody.png}
-    \caption{Body Popup}
+    \caption{Body popup}
     \label{fig:newbody}
 \end{figure}
 
@@ -352,7 +353,7 @@ When the child taps the body part, they can choose from three different colors t
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/newrightwing.png}
-    \caption{Right Wing Popup}
+    \caption{Right Wing popup}
     \label{fig:newrightwing}
 \end{figure}
 
@@ -363,7 +364,7 @@ When the child taps the right wing, they will be able to choose how many times t
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/newleftwing2.png}
-    \caption{Left Wing Popup Notes}
+    \caption{Left wing popup notes}
     \label{fig:newleftwing}
 \end{figure}
 
@@ -372,7 +373,7 @@ When the child taps the left wing, they will be able to choose the first note to
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/newleftwing.png}
-    \caption{Left Wing Popup Rests}
+    \caption{Left wing popup rests}
     \label{fig:newleftwing2}
 \end{figure}
 
@@ -383,7 +384,7 @@ The lever can be toggled to show the rests.
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/candypreview.png}
-    \caption{Tail Popup}
+    \caption{Tail popup}
     \label{fig:newtail}
 \end{figure}
 
@@ -394,11 +395,11 @@ When the child taps the tail, they will be able to choose the patterns based on 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/newfeedme.png}
-    \caption{Left Wing Popup Notes}
+    \caption{Left wing popup notes}
     \label{fig:newleftwing}
 \end{figure}
 
-After choosing the pattern, the child can tap the feed me button which brings up the staff where he can place the candies to give the firefly pitches. In this screen, there is also a preview button which plays the current firefly to see how it will sound like. The clear button resets the candy placements. The last screen button allows you to go back to editing the firefly. The save buttons saves the current firefly configuration. The next firefly button will go to the next editable firefly.
+After choosing the pattern, the child can tap the feed me button which brings up the staff where they can place the candies to give the firefly pitches. In this screen, there is also a preview button which plays the current firefly to see how it will sound like. The clear button resets the candy placements. The last screen button allows you to go back to editing the firefly. The save buttons saves the current firefly configuration. The next firefly button will go to the next editable firefly.
 
 \subsection{Jar Play}
 
@@ -420,7 +421,7 @@ When the child taps on the gear icon, this will bring up a popup menu where can 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/newsettings.png}
-    \caption{Visual Settings}
+    \caption{Visual settings}
     \label{fig:newvisettings}
 \end{figure}
 
@@ -431,7 +432,7 @@ After tapping the settings button, the child may toggle the speech bubble guide 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figures/newScreenFlows/newload.png}
-    \caption{Load Screen}
+    \caption{Load screen}
     \label{fig:newload}
 \end{figure}
 After tapping the load button, this brings up the previous jars that the child made and can load from his previous saves.
@@ -447,16 +448,13 @@ After tapping the load button, this brings up the previous jars that the child m
 % This is the use case diagram of Firefly. These are all the actions that the user is allowed to do within the application.
 
 \section{Deployment Plan}
-FireflyX will be developed using Xcode using the Swift language. The application once compiled can be uploaded to the Apple App Store where anyone may download the app for free but with in-game purchases. The files will be saved locally this includes the songs and the environment, these files will be exportable with the use of the JSON. Using the JSON another user in a different iPad can retrieve the same environment by loading the JSON sent. A diagram showing the deployment plan is shown in figure \ref{deploymentPlan}.
+FireflyX will be developed using Xcode using the Swift language. The application once compiled can be uploaded to the Apple App Store where anyone may download the application for free. We will then use TestFlight to distribute our application. This is because Testflight allows for remote testing. To use TestFlight, we will upload beta builds of FireflyX, and invite testers using their email addresses. Testers will then check their email to accept the invitation to test the application. In order for the testers to install FireflyX, They will have to use the TestFlight application in their iPad after accepting the invitation in their email.
+
+The files will then be saved locally this includes the songs and their respective jars, these files will be exportable with the use of the JSON. Using the JSON another user in a different iPad can retrieve the same environment by loading the JSON sent. This will be done since the application is also connected to Google's Firebase storage to save the data online in JSON format. A diagram showing the deployment plan is shown in figure \ref{deploymentPlan}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=15cm]{figures/deploymentPlan.png}
-    \caption{FireflyX Deployment Plan}
+    \caption{FireflyX deployment plan}
     \label{deploymentPlan}
 \end{figure}
-
-We will then use TestFlight to distribute our application. This is because Testflight allows for remote testing. To use TestFlight, we will upload beta builds of FireflyX, and invite testers using their email addresses. Testers will then check their email to accept the invitation to test the application. In order for the testers to install FireflyX, They will have to use the TestFlight app in their iPad after accepting the invitation in their email.
-
-
-FireflyX also uses Firebase to save the data online in JSON format. 
